@@ -44,3 +44,14 @@ class Feedback(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_feedback', null=True, blank=True)
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name='lot_feedback', null=True, blank=True)
     text = models.TextField()
+
+
+class Deal(models.Model):
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer_deals')
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_deals')
+
+
+class DealLots(models.Model):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name='deals')
+    deal = models.ForeignKey(Deal, on_delete=models.CASCADE, related_name='lots')
+    lots_count = models.PositiveIntegerField()
