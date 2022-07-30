@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Flower, Lot, Feedback
+from .models import User, Flower, Lot, Feedback, Deal, DealLots
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -19,6 +19,17 @@ class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('author', 'seller', 'lot', 'text')
 
 
+class DealLotsAdmin(admin.TabularInline):
+    model = DealLots
+    extra = 0
+
+
+class DealAdmin(admin.ModelAdmin):
+    list_display = ('buyer', 'seller')
+    inlines = [DealLotsAdmin]
+
+
+admin.site.register(Deal, DealAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Flower, FlowersAdmin)

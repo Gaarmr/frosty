@@ -19,6 +19,12 @@ USER_ROLES = (
 class User(AbstractUser):
     role = models.CharField(choices=USER_ROLES, max_length=2)
 
+    def is_seller(self):
+        return self.role == 'SL'
+
+    def is_buyer(self):
+        return self.role == 'BY'
+
 
 class Flower(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -36,7 +42,7 @@ class Lot(models.Model):
     available = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.item}"
+        return f"{self.item} | {self.price} | {self.stock}"
 
 
 class Feedback(models.Model):
